@@ -53,14 +53,13 @@ create_repository() {
   userType=$(jq -r '.type' <<< "$resp")
   
   echo "HADAR: $userType"
-  echo "$git_url/$org_name/repos"
   
   if [ $userType == "User" ]; then
     curl -X POST -i -H "Authorization: token $github_token" -H "X-GitHub-Api-Version: 2022-11-28" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
         }" \
-      $git_url/$org_name/repos
+      $git_url/user/repos
   elif [ $userType == "Organization" ]; then
     curl -i -H "Authorization: token $github_token" \
        -d "{ \
