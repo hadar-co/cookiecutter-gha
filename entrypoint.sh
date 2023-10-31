@@ -46,10 +46,14 @@ add_link() {
 }
 
 create_repository() {
+  echo "HADAR test"
+  
   blah=$(curl -i -H "Authorization: token $github_token" \
-      $git_url/users/$org_name) | jq .type
-
-  echo $blah
+      $git_url/users/$org_name) | jq -r '.type'
+      
+  echo "HERE IT IS:\n $blah"
+  
+  echo "HADAR test end"
   
   curl -i -H "Authorization: token $github_token" \
        -d "{ \
