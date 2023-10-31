@@ -46,6 +46,11 @@ add_link() {
 }
 
 create_repository() {
+  blah=$(curl -i -H "Authorization: token $github_token" \
+      $git_url/users/$org_name) | jq .type
+
+  echo $blah
+  
   curl -i -H "Authorization: token $github_token" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
