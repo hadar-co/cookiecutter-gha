@@ -49,9 +49,13 @@ create_repository() {
   echo "HADAR test"
   echo "$git_url/users/$org_name"
   
-  blah=$(curl -i -H "Authorization: token $github_token" -H "Accept: application/json" -H "Content-Type: application/json" $git_url/users/$org_name) | jq -r '.type'
-      
-  echo "HERE IT IS: $blah"
+  resp=$(curl -i -H "Authorization: token $github_token" -H "Accept: application/json" -H "Content-Type: application/json" $git_url/users/$org_name)
+
+  userType=$resp | jq -r '.type'
+  
+  echo "RESPONSE:\n $resp"
+
+  echo "USER TYPE: $userType"
   
   echo "HADAR test end"
   
