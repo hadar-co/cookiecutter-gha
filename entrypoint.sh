@@ -56,7 +56,7 @@ create_repository() {
   echo "$git_url/$org_name/repos"
   
   if [ $userType == "User" ]; then
-    curl -i -H "Authorization: token $github_token" -H "X-GitHub-Api-Version: 2022-11-28" \
+    curl -X POST -i -H "Authorization: token $github_token" -H "X-GitHub-Api-Version: 2022-11-28" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
         }" \
