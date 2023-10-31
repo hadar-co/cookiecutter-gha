@@ -46,7 +46,6 @@ add_link() {
 }
 
 create_repository() {
-  echo "HADAR test"
   echo "$git_url/users/$org_name"
   
   resp=$(curl -H "Authorization: token $github_token" -H "Accept: application/json" -H "Content-Type: application/json" $git_url/users/$org_name)
@@ -54,7 +53,7 @@ create_repository() {
   userType=$(jq -r '.type' <<< "$resp")
 
   if [ $userType == "User" ]; then
-    curl -i -H "Authorization: token $github_token" \
+    curl -i -H "Authorization: token $github_token" -H "X-GitHub-Api-Version: 2022-11-28" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
         }" \
