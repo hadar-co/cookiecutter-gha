@@ -51,7 +51,7 @@ create_repository() {
   
   resp=$(curl -H "Authorization: token $github_token" -H "Accept: application/json" -H "Content-Type: application/json" $git_url/users/$org_name)
 
-  userType=$resp | jq -r '.type'
+  userType=$(jq -r '.type' <<< "$resp")
   
   echo "RESPONSE:\n $resp"
 
