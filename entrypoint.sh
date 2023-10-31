@@ -53,13 +53,13 @@ create_repository() {
 
   userType=$(jq -r '.type' <<< "$resp")
 
-  if ($userType == "User"); then
+  if [$userType == "User"]; then
     curl -i -H "Authorization: token $github_token" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
         }" \
       $git_url/$org_name/repos
-  elif ($userType == "Organization"); then
+  elif [$userType == "Organization"]; then
     curl -i -H "Authorization: token $github_token" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
