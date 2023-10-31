@@ -52,18 +52,22 @@ create_repository() {
   resp=$(curl -H "Authorization: token $github_token" -H "Accept: application/json" -H "Content-Type: application/json" $git_url/users/$org_name)
 
   userType=$(jq -r '.type' <<< "$resp")
-  
-  echo "RESPONSE:\n $resp"
 
-  echo "USER TYPE: $userType"
-  
-  echo "HADAR test end"
-  
-  curl -i -H "Authorization: token $github_token" \
+  if ($userType == "User"); then
+    curl -i -H "Authorization: token $github_token" \
+       -d "{ \
+          \"name\": \"$repository_name\", \"private\": true
+        }" \
+      $git_url/$org_name/repos
+  elif ($userType == "Organization"); then
+    curl -i -H "Authorization: token $github_token" \
        -d "{ \
           \"name\": \"$repository_name\", \"private\": true
         }" \
       $git_url/orgs/$org_name/repos
+  else
+    echo "Invalid user type"
+  fi
 }
 
 clone_monorepo() {
